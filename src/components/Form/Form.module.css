@@ -1,0 +1,26 @@
+.container{
+    background:blue;
+    display:flex;
+    justify-content: center;   
+    flex-direction:column;
+    align-items:center;
+    
+    
+}
+
+
+.form{
+    display:flex;
+    flex-direction:column;
+    background:grey;
+    width:50%;
+    height:40vh;
+    overflow:hidden;
+    overflow-y:scroll;   
+}
+
+.field{
+    margin:10px;
+    color:black;
+    font-size:1.2em;
+}
