@@ -1,13 +1,38 @@
 .container{
-    background-color: blueviolet;
-    min-height:40vh;
+    background-color: white;
 }
 .row{
-    background:black;
-    color:white;
+    color:black;
     font-size:1.25em;
     margin:20px;
-    display:flex;
-    flex-direction: row;
-    justify-content:space-around;
+    
+}
+.row:nth-child(even){
+    background: #a3d4d6;
+}
+.row:nth-child(odd){
+    background: white;
+}
+.tableheader{
+    background:#1d3557;
+    color:white;
+    padding:5px;
+    overflow:hidden;
+    overflow-x:scroll;
+}
+.head{
+    padding:10px;
+}
+.edit{
+    color:white;
+    border:0px;
+    background-color: indianred;
+    padding: 5px 20px 5px 20px;
+    margin:5px;
+}
+@media only screen and (min-width:768px){
+    .container
+    {
+        width:100vw;
+    }
 }
