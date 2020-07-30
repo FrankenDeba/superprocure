@@ -28,7 +28,7 @@ class Table extends Component {
                             <td className={styles.field}>{item.pincode}</td>
                             <td className={styles.field}>{item.state}</td>
                             <td className={styles.field}>{item.gst}</td>
-                            <td className={styles.field}><button className={styles.edit}>Edit</button></td>
+                            <td className={styles.field}><button className={styles.edit} onClick = {this.props.editUser}>Edit</button></td>
                 
                         </tr>)
                     })
