@@ -101,7 +101,8 @@ export class Form extends Component {
             })
         }
             else if(this.props.mode==="edit"){
-                console.log("state value after edit: ",this.props.user)
+                console.log("state value before editing",this.state);
+                
                 this.setState({
                     name:this.props.user.name,
                     number: this.props.user.number,
@@ -110,7 +111,7 @@ export class Form extends Component {
                     pincode: this.props.user.pincode,
                     state: this.props.user.state,
                     gst: this.props.user.gst,
-                })
+                },()=>console.log("state after editing: ",this.state))
                 await this.props.editUser({
                     name: this.state.name,
                     number: this.state.number,
@@ -119,11 +120,6 @@ export class Form extends Component {
                     pincode: this.state.pincode,
                     state: this.state.state,
                     gst: this.state.gst,
-
-
-
-
-
                 })
                 await this.setState({
                     name: "",
@@ -161,7 +157,6 @@ export class Form extends Component {
             <div className = {styles.container}>
                     
                     <form className={styles.form} onSubmit={(e) => this.submit(e)}>
-                    {this.props.mode}
                         <div className = {styles.top}>Please enter customer details:<span className={styles.close} onClick={this.props.click}>X</span></div>
                         <div className={styles.field}>
                         
