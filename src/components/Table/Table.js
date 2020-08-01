@@ -43,14 +43,14 @@ const mapStateToProps = (state) =>{
         users:state.users
     }
 }
-const mapDispatchToProps = (dispatch) =>{
-    return(
-        {
-            edit:()=>{
-                dispatch(editUser())
-            }
+// const mapDispatchToProps = (dispatch) =>{
+//     return(
+//         {
+//             edit:()=>{
+//                 dispatch(editUser())
+//             }
             
-        }
-    )
-}
+//         }
+//     )
+// }
 export default connect(mapStateToProps,null)(Table)

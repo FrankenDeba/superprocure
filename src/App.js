@@ -30,7 +30,9 @@ class App extends React.Component{
       <div className="App">
         <Button click={(e) => this.toggleModal(e,this.mode[0])} value="Add User" />
         <Table editUser = {(e) =>this.toggleModal(e,this.mode[1])}/>
-        <Modal status={this.state.showhide}><Form openclose={this.state.showhide} mode = {this.state.mode} click = {()=>this.toggleModal()}/></Modal>
+        <Modal status={this.state.showhide}>
+          <Form openclose={this.state.showhide} mode = {this.state.mode} click = {()=>this.toggleModal()}/>
+        </Modal>
       </div>
     );
   }

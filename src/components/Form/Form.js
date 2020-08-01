@@ -20,17 +20,10 @@ export class Form extends Component {
     
 
         }
+
     }
-
-
-
-
-
-
-
     changeValue = (e) =>{
         console.log(e.target.value);
-        
         if(e.target.name==="name"){
             this.setState({name:e.target.value})
         }   
@@ -101,17 +94,18 @@ export class Form extends Component {
             })
         }
             else if(this.props.mode==="edit"){
+                
                 console.log("state value before editing",this.state);
                 
                 this.setState({
-                    name:this.props.user.name,
-                    number: this.props.user.number,
-                    email: this.props.user.email,
-                    adress: this.props.user.adress,
-                    pincode: this.props.user.pincode,
-                    state: this.props.user.state,
-                    gst: this.props.user.gst,
-                },()=>console.log("state after editing: ",this.state))
+                    name:this.props.user[0].name,
+                    number: this.props.user[0].number,
+                    email: this.props.user[0].email,
+                    adress: this.props.user[0].adress,
+                    pincode: this.props.user[0].pincode,
+                    state: this.props.user[0].state,
+                    gst: this.props.user[0].gst,
+                },()=>console.log("state after editing: ",this.props.user))
                 await this.props.editUser({
                     name: this.state.name,
                     number: this.state.number,
@@ -159,33 +153,38 @@ export class Form extends Component {
                     <form className={styles.form} onSubmit={(e) => this.submit(e)}>
                         <div className = {styles.top}>Please enter customer details:<span className={styles.close} onClick={this.props.click}>X</span></div>
                         <div className={styles.field}>
-                        
-                            <input placeholder = "Customer Name" type="text" value={this.state.name} name="name" onChange={(e) => this.changeValue(e)} />
+                        {this.props.user.name}
+                        <input 
+                            placeholder="Customer Name" 
+                            type="text" 
+                            value={this.props.mode === "add" ? this.state.name : this.props.user.name} 
+                            name="name" 
+                            onChange={(e) => this.changeValue(e)} />
                         </div>
                     <div className={styles.field}>
 
-                        <input placeholder="Customer Number" type="number" value={this.state.number} name="number" onChange={(e) => this.changeValue(e)} />
+                        <input placeholder="Customer Number" type="number" value={this.props.mode === "edit" ? this.props.user.number : this.state.number} name="number" onChange={(e) => this.changeValue(e)} />
                     </div>
 
                     <div className={styles.field}>
 
-                        <input placeholder="Customer Email" type="email" value={this.state.email} name="email" onChange={(e) => this.changeValue(e)} />
+                        <input placeholder="Customer Email" type="email" value={this.props.mode === "edit" ? this.props.user.email : this.state.email} name="email" onChange={(e) => this.changeValue(e)} />
                     </div>
 
                     <div className={styles.field}>
 
-                        <input placeholder="Customer Adress" type="text" value={this.state.adress} name="adress" onChange={(e) => this.changeValue(e)} />
+                        <input placeholder="Customer Adress" type="text" value={this.props.mode === "edit" ? this.props.user.adress : this.state.adress} name="adress" onChange={(e) => this.changeValue(e)} />
                     </div>
                         <div className={styles.field}>
-                            <input type = "text" placeholder = "City Pincode" value={this.state.pincode} name="pincode" onChange={(e) => this.changeValue(e)} />
+                        <input type="text" placeholder="City Pincode" value={this.props.mode === "edit" ? this.props.user.pincode : this.state.pincode} name="pincode" onChange={(e) => this.changeValue(e)} />
                         </div>
                     <div className={styles.field}>
 
-                        <input placeholder="State" type="text" value={this.state.state} name="state" onChange={(e) => this.changeValue(e)} />
+                        <input placeholder="State" type="text" value={this.props.mode === "edit" ? this.props.user.state : this.state.state} name="state" onChange={(e) => this.changeValue(e)} />
                     </div>
                     <div className={styles.field}>
 
-                        <input placeholder="Gst no." type="text" value={this.state.gst} name="gst" onChange={(e) => this.changeValue(e)} />
+                        <input placeholder="Gst no." type="text" value={this.props.mode === "edit" ? this.props.user.gst : this.state.gst} name="gst" onChange={(e) => this.changeValue(e)} />
                     </div>
                         <div className={styles.field}><input type="submit" value="submit" className = {styles.submit}/></div>
                     <div className ={styles.message}>{this.state.message}</div>

@@ -1,7 +1,8 @@
 import { ADD_USER, EDIT_USER } from "../actions/actionTypes"
 
 const initialState = {
-    users:[]
+    users:[],
+    selecteddUser:{}
 }
 
 const reducer = (state = initialState, action) =>{
