@@ -12,7 +12,7 @@
     flex-direction:column;
     background:white;
     width:85%;
-    height:60vh;
+    height:50vh;
     padding:10px;
     align-content:center;
     overflow:hidden;
@@ -36,7 +36,7 @@ input{
 
 }
 .top{
-    border-bottom: 1px groove darkgrey;
+    border-bottom: 1px groove lightgray;
     padding:5px;
     display:flex;
     justify-content:space-between;
@@ -46,6 +46,7 @@ input{
 .close{
     align-self:flex-end;
     margin-right:10px;
+    font-weight: 500;
 }
 .submit{
     width:40%;
@@ -60,6 +61,7 @@ input{
 @media only screen and (min-width:768px){
     .form{
         width:50%;
+        height:40vh;
     }
     input{
         width:70%;

@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
-import { editUser } from "../../actions/actionCreator"
+import { selectUser } from "../../actions/actionCreator"
 import { connect } from "react-redux"
 import styles from "./Table.module.css"
 
 class Table extends Component {
+    handleClick = (e,item)=>{
+        this.props.editUser()
+        this.props.selectuser(item)
+        
+    }
     render() {
         return (
-            <table className = {styles.container}>
+            <div className = {styles.container}>
+                <table>
                 <tr className={styles.tableheader}>
                     <th className={styles.head}>Customer name</th>
                     <th className={styles.head}>Customer number</th>
@@ -28,13 +34,15 @@ class Table extends Component {
                             <td className={styles.field}>{item.pincode}</td>
                             <td className={styles.field}>{item.state}</td>
                             <td className={styles.field}>{item.gst}</td>
-                            <td className={styles.field}><button className={styles.edit} onClick = {this.props.editUser}>Edit</button></td>
+                            <td className={styles.field}><button className={styles.edit} onClick = {(e)=>this.handleClick(e,item)}>Edit</button></td>
                 
                         </tr>)
                     })
             }
                
             </table>
+            </div>
+            
         )
     }
 }
@@ -43,14 +51,14 @@ const mapStateToProps = (state) =>{
         users:state.users
     }
 }
-// const mapDispatchToProps = (dispatch) =>{
-//     return(
-//         {
-//             edit:()=>{
-//                 dispatch(editUser())
-//             }
+const mapDispatchToProps = (dispatch) =>{
+    return(
+        {
+            selectuser:(item)=>{
+                dispatch(selectUser(item))
+            }
             
-//         }
-//     )
-// }
-export default connect(mapStateToProps,null)(Table)
+        }
+    )
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Table)

@@ -11,14 +11,14 @@ class App extends React.Component{
   
     this.state = {
         showhide: false,
-        mode:""
+        mode:"",
         
     }
 
   }
   mode = ["add","edit"]
   toggleModal = (e,modeValue) =>{
-    alert(modeValue)
+
     console.log("---------------------------------------------------\nToggle Modal running");
     this.setState({showhide:!this.state.showhide,mode:modeValue})
   }

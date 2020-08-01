@@ -1,12 +1,13 @@
-import { ADD_USER, EDIT_USER } from "../actions/actionTypes"
+import { ADD_USER, EDIT_USER, SELECT_USER } from "../actions/actionTypes"
 
 const initialState = {
     users:[],
-    selecteddUser:{}
+    selectedUser:null
 }
 
 const reducer = (state = initialState, action) =>{
     let users = state.users.slice()
+    let selectedUser = state.selectedUser
     switch(action.type){
         case ADD_USER:
             console.log("after dispatch:",action.payload);
@@ -23,6 +24,11 @@ const reducer = (state = initialState, action) =>{
             return({
                 ...state,
                users
+            })
+        case SELECT_USER:
+            return({
+                ...state,
+                selectedUser:action.payload
             })
         default:
             return state

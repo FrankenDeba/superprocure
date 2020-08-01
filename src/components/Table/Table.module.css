@@ -1,11 +1,16 @@
 .container{
     background-color: white;
+    overflow-x: auto;
+    width:100vw;
 }
 .row{
     color:black;
     font-size:1.25em;
     margin:20px;
     
+}
+table{
+    width:100%;
 }
 .row:nth-child(even){
     background: #a3d4d6;
@@ -17,8 +22,6 @@
     background:#1d3557; 
     color:white;
     padding:5px;
-    overflow:hidden;
-    overflow-x:auto;
 }
 .head{
     padding:10px;

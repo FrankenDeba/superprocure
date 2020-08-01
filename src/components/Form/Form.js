@@ -5,10 +5,12 @@ import styles from "./Form.module.css"
 import { addUser, editUser } from "../../actions/actionCreator"
 export class Form extends Component {
     constructor(props) {
+        //alert("mode is: ",props.mode);
+        
         super(props)
-    
+        this.mode=props.mode
         this.state = {
-             name:"",
+             name:this.mode,
              number:"",
              email:"",
              adress:"",
@@ -17,11 +19,45 @@ export class Form extends Component {
              gst:"",
              message:"",
              allFilled:false,
-    
-
+             errorColor:"",
         }
 
     }
+    componentWillReceiveProps = (nextProps) =>{
+        console.log("show hide:",nextProps.openclose)
+       if(nextProps.mode === "edit"){
+           this.setState({
+            name:nextProps.selecteduser.name,
+            number:nextProps.selecteduser.number,
+            email:nextProps.selecteduser.email,
+            adress:nextProps.selecteduser.adress,
+            pincode:nextProps.selecteduser.pincode,
+            state:nextProps.selecteduser.state,
+            gst:nextProps.selecteduser.gst,
+        
+           })
+       }
+       else{
+           this.setState({
+               name:"",
+               number:"",
+               email:"",
+               adress:"",
+               pincode:"",
+               state:"",
+               gst:""
+           })
+       }
+       if(nextProps.openclose===false){
+           this.setState({message:""})
+       }
+
+    }
+    
+    settingValue = (mode) =>{
+        alert("setting value: ",this.props.mode)
+    }
+
     changeValue = (e) =>{
         console.log(e.target.value);
         if(e.target.name==="name"){
@@ -62,10 +98,10 @@ export class Form extends Component {
         this.state.pincode === "" ||
         this.state.state === "" ||
         this.state.gst === ""){
-            this.setState({message:"please fill",allFilled:false})
+            await this.setState({errorColor:"red",message:"please fill all the details",allFilled:false})
         }    
         else{
-            this.setState({allFilled:true,message:"submitted successfully"},
+            await this.setState({allFilled:true,errorColor:"green",message:"submitted successfully"},
             ()=>console.log("all field value",this.state.allFilled))
             if(this.props.mode==="add"){
                 await this.props.addUser({
@@ -97,15 +133,15 @@ export class Form extends Component {
                 
                 console.log("state value before editing",this.state);
                 
-                this.setState({
-                    name:this.props.user[0].name,
-                    number: this.props.user[0].number,
-                    email: this.props.user[0].email,
-                    adress: this.props.user[0].adress,
-                    pincode: this.props.user[0].pincode,
-                    state: this.props.user[0].state,
-                    gst: this.props.user[0].gst,
-                },()=>console.log("state after editing: ",this.props.user))
+                // this.setState({
+                //     name:this.props.user[0].name,
+                //     number: this.props.user[0].number,
+                //     email: this.props.user[0].email,
+                //     adress: this.props.user[0].adress,
+                //     pincode: this.props.user[0].pincode,
+                //     state: this.props.user[0].state,
+                //     gst: this.props.user[0].gst,
+                // },()=>console.log("state after editing: ",this.props.user))
                 await this.props.editUser({
                     name: this.state.name,
                     number: this.state.number,
@@ -141,53 +177,89 @@ export class Form extends Component {
         
         
     }
-    
     render() {
        
         console.log("openclose",this.props.openclose);
         
         return (
-    
+            
+        
             <div className = {styles.container}>
-                    
                     <form className={styles.form} onSubmit={(e) => this.submit(e)}>
                         <div className = {styles.top}>Please enter customer details:<span className={styles.close} onClick={this.props.click}>X</span></div>
-                        <div className={styles.field}>
-                        {this.props.user.name}
-                        <input 
-                            placeholder="Customer Name" 
-                            type="text" 
-                            value={this.props.mode === "add" ? this.state.name : this.props.user.name} 
-                            name="name" 
-                            onChange={(e) => this.changeValue(e)} />
-                        </div>
-                    <div className={styles.field}>
+                            <div className={styles.field}>
+                                <input 
+                                    placeholder="Customer Name" 
+                                    type="text" 
+                                    value={this.state.name} 
+                                    name="name" 
+                                    onChange={(e) => this.changeValue(e)} />
+                            </div>
+                            <div className={styles.field}>
 
-                        <input placeholder="Customer Number" type="number" value={this.props.mode === "edit" ? this.props.user.number : this.state.number} name="number" onChange={(e) => this.changeValue(e)} />
-                    </div>
+                                <input 
+                                    placeholder="Customer Number" 
+                                    type="number" 
+                                    value={this.state.number} 
+                                    name="number" 
+                                    onChange={(e) => this.changeValue(e)} />
+                            </div>
 
-                    <div className={styles.field}>
+                            <div className={styles.field}>
 
-                        <input placeholder="Customer Email" type="email" value={this.props.mode === "edit" ? this.props.user.email : this.state.email} name="email" onChange={(e) => this.changeValue(e)} />
-                    </div>
+                                <input 
+                                    placeholder="Customer Email" 
+                                    type="email" 
+                                    value={this.state.email} 
+                                    name="email" 
+                                    onChange={(e) => this.changeValue(e)} />
+                            </div>
 
-                    <div className={styles.field}>
+                            <div className={styles.field}>
 
-                        <input placeholder="Customer Adress" type="text" value={this.props.mode === "edit" ? this.props.user.adress : this.state.adress} name="adress" onChange={(e) => this.changeValue(e)} />
-                    </div>
-                        <div className={styles.field}>
-                        <input type="text" placeholder="City Pincode" value={this.props.mode === "edit" ? this.props.user.pincode : this.state.pincode} name="pincode" onChange={(e) => this.changeValue(e)} />
-                        </div>
-                    <div className={styles.field}>
+                                <input 
+                                    placeholder="Customer Adress" 
+                                    type="text" 
+                                    value={this.state.adress} 
+                                    name="adress" 
+                                    onChange={(e) => this.changeValue(e)} />
+                            </div>
+                            <div className={styles.field}>
+                                <input 
+                                type="text" 
+                                placeholder="City Pincode" 
+                                value={this.state.pincode} 
+                                name="pincode" 
+                                onChange={(e) => this.changeValue(e)} />
+                            </div>
+                            <div className={styles.field}>
 
-                        <input placeholder="State" type="text" value={this.props.mode === "edit" ? this.props.user.state : this.state.state} name="state" onChange={(e) => this.changeValue(e)} />
-                    </div>
-                    <div className={styles.field}>
+                                <input 
+        
+                                    placeholder="State" 
+                                    type="text" 
+                                    value={this.state.state} 
+                                    name="state" 
+                                    onChange={(e) => this.changeValue(e)} />
+                            </div>
+                            <div className={styles.field}>
 
-                        <input placeholder="Gst no." type="text" value={this.props.mode === "edit" ? this.props.user.gst : this.state.gst} name="gst" onChange={(e) => this.changeValue(e)} />
-                    </div>
-                        <div className={styles.field}><input type="submit" value="submit" className = {styles.submit}/></div>
-                    <div className ={styles.message}>{this.state.message}</div>
+                                <input 
+                                    placeholder="Gst no." 
+                                    type="text" 
+                                    value={this.state.gst} 
+                                    name="gst" 
+                                    onChange={(e) => this.changeValue(e)} />
+                            </div>
+                            <div className={styles.field}>
+                                <input 
+                                    type="submit" 
+                                    value="submit" 
+                                    className = {styles.submit}/>
+                            </div>
+                            <div style={this.state.errorColor==='red'?{color:"red"}:{color:"green"}}>
+                                {this.state.message}
+                            </div>
                     </form>
                     
                     
@@ -209,7 +281,8 @@ const mapDispatchToProps = (dispatch) =>{
 
 const mapStateToProps = (state) =>{
     return {
-        user:state.users
+        user:state.users,
+        selecteduser:state.selectedUser
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Form)
