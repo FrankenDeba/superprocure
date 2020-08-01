@@ -17,6 +17,7 @@ const reducer = (state = initialState, action) =>{
                 ...state,
                 users
             })
+
         case EDIT_USER:
             let user = users.find(item =>item.number===action.payload.number)
             let index = users.indexOf(user)
@@ -25,11 +26,13 @@ const reducer = (state = initialState, action) =>{
                 ...state,
                users
             })
+
         case SELECT_USER:
             return({
                 ...state,
                 selectedUser:action.payload
             })
+            
         default:
             return state
 

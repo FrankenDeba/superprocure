@@ -16,22 +16,29 @@ class App extends React.Component{
     }
 
   }
+
   mode = ["add","edit"]
+  
   toggleModal = (e,modeValue) =>{
 
     console.log("---------------------------------------------------\nToggle Modal running");
     this.setState({showhide:!this.state.showhide,mode:modeValue})
   }
-  // editUser = () =>{
-  //   alert("editing mode")
-  // }
+
    render(){
     return (
       <div className="App">
-        <Button click={(e) => this.toggleModal(e,this.mode[0])} value="Add User" />
-        <Table editUser = {(e) =>this.toggleModal(e,this.mode[1])}/>
-        <Modal status={this.state.showhide}>
-          <Form openclose={this.state.showhide} mode = {this.state.mode} click = {()=>this.toggleModal()}/>
+        <Button 
+          click={(e) => this.toggleModal(e,this.mode[0])} 
+          value="Add User" />
+        <Table 
+          editUser = {(e) =>this.toggleModal(e,this.mode[1])}/>
+        <Modal 
+          status={this.state.showhide}>
+            <Form 
+              openclose={this.state.showhide} 
+              mode = {this.state.mode} 
+              click = {()=>this.toggleModal()}/>
         </Modal>
       </div>
     );
