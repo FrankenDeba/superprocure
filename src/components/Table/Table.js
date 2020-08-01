@@ -26,7 +26,7 @@ class Table extends Component {
                                       
                {
                     this.props.users.map(item =>{
-                        return (<tr className={styles.row}>
+                        return (<tr key = {item.gst} className={styles.row}>
                             <td className = {styles.field}>{item.name}</td>
                             <td className = {styles.field}>{item.number}</td>
                             <td className={styles.field}>{item.email}</td>

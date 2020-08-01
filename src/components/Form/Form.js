@@ -45,7 +45,7 @@ export class Form extends Component {
                address:"",
                pincode:"",
                state:"",
-               gst:""
+               gst:"",
            })
        }
 
@@ -56,7 +56,6 @@ export class Form extends Component {
     }
     
     changeValue = (e) =>{
-        console.log(e.target.value);
         if(e.target.name==="name"){
             this.setState({name:e.target.value})
         }   
@@ -82,7 +81,6 @@ export class Form extends Component {
 
     submit = async (e) =>{
         e.preventDefault()
-
         if(this.state.name === "" || 
         this.state.number === "" || 
         this.state.email==="" || 
@@ -94,29 +92,34 @@ export class Form extends Component {
         } 
 
         else{
-            await this.setState({allFilled:true,errorColor:"green",message:"submitted successfully"},
-            ()=>console.log("all field value",this.state.allFilled))
+            await this.setState({allFilled:true,errorColor:"green",message:"submitted successfully"})
             if(this.props.mode==="add"){
-                await this.props.addUser({
-                name: this.state.name,
-                number: this.state.number,
-                email: this.state.email,
-                address: this.state.address,
-                pincode: this.state.pincode,
-                state: this.state.state,
-                gst: this.state.gst,
-            })
-
-            await this.setState({
-                name: "",
-                number: "",
-                email: "",
-                address: "",
-                pincode: "",
-                state: "",
-                gst: "",
-
-            })
+                let existingUser = this.props.user.find(item => item.gst===this.state.gst)
+                if(existingUser){
+                        this.setState({errorColor:"red",message:"user already exists"})
+                }
+                else{
+                    await this.props.addUser({
+                        name: this.state.name,
+                        number: this.state.number,
+                        email: this.state.email,
+                        address: this.state.address,
+                        pincode: this.state.pincode,
+                        state: this.state.state,
+                        gst: this.state.gst,
+                    })
+        
+                    await this.setState({
+                        name: "",
+                        number: "",
+                        email: "",
+                        address: "",
+                        pincode: "",
+                        state: "",
+                        gst: "",
+                    })
+                } 
+                
         }
 
             else if(this.props.mode==="edit"){
@@ -148,7 +151,7 @@ export class Form extends Component {
   render() {
         return (
             //this is debashis
-            
+
             <div className = {styles.container}>
                     <form className={styles.form} onSubmit={(e) => this.submit(e)}>
                         <div className = {styles.top}>

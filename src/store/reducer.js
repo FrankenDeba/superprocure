@@ -8,18 +8,17 @@ const initialState = {
 const reducer = (state = initialState, action) =>{
     let users = state.users.slice()
     let selectedUser = state.selectedUser
+
     switch(action.type){
         case ADD_USER:
-            console.log("after dispatch:",action.payload);
             users.push(action.payload)
-            console.log("users array: ",users);
             return({
                 ...state,
                 users
             })
 
         case EDIT_USER:
-            let user = users.find(item =>item.number===action.payload.number)
+            let user = users.find(item =>item.gst===action.payload.gst)
             let index = users.indexOf(user)
             users.splice(index,1,action.payload)
             return({
