@@ -19,6 +19,7 @@ export class Form extends Component {
              message:"",
              allFilled:false,
              errorColor:"",
+             disabled:false,
         }
 
     }
@@ -33,7 +34,7 @@ export class Form extends Component {
             pincode:nextProps.selecteduser.pincode,
             state:nextProps.selecteduser.state,
             gst:nextProps.selecteduser.gst,
-        
+            disabled:true,
            })
        }
 
@@ -46,6 +47,7 @@ export class Form extends Component {
                pincode:"",
                state:"",
                gst:"",
+               disabled:false,
            })
        }
 
@@ -56,31 +58,10 @@ export class Form extends Component {
     }
     
     changeValue = (e) =>{
-        if(e.target.name==="name"){
-            this.setState({name:e.target.value})
-        }   
-        else if (e.target.name === "number") {
-            this.setState({ number: e.target.value })
-        }
-        else if (e.target.name === "email") {
-            this.setState({ email: e.target.value })
-        }
-        else if (e.target.name === "address") {
-            this.setState({ address: e.target.value })
-        }
-        else if (e.target.name === "pincode") {
-            this.setState({ pincode: e.target.value })
-        }
-        else if (e.target.name === "state") {
-            this.setState({ state: e.target.value })
-        }
-        else if (e.target.name === "gst") {
-            this.setState({ gst: e.target.value })
-        }    
+        this.setState({[e.target.name]:e.target.value}) 
     }
 
-    submit = async (e) =>{
-        e.preventDefault()
+    validateForm = () =>{
         if(this.state.name === "" || 
         this.state.number === "" || 
         this.state.email==="" || 
@@ -88,12 +69,36 @@ export class Form extends Component {
         this.state.pincode === "" ||
         this.state.state === "" ||
         this.state.gst === ""){
-            await this.setState({errorColor:"red",message:"please fill all the details",allFilled:false})
+            this.setState({errorColor:"red",message:"please fill all the details",allFilled:false})
+            return false
         } 
+        return true
+    }
 
-        else{
-            await this.setState({allFilled:true,errorColor:"green",message:"submitted successfully"})
-            if(this.props.mode==="add"){
+    submissionDone = async () =>{
+        await this.setState({
+            name: "",
+            number: "",
+            email: "",
+            address: "",
+            pincode: "",
+            state: "",
+            gst: "",
+            allFilled:true,
+            errorColor:"green",
+            message:"submitted successfully"
+        },()=>{console.log(this.state);
+        })
+    }
+    
+    submit = async (e) =>{
+        e.preventDefault()
+
+        console.log("validation form: ",this.validateForm());
+        
+    
+            
+            if(this.props.mode==="add" && this.validateForm()){
                 let existingUser = this.props.user.find(item => item.gst===this.state.gst)
                 if(existingUser){
                         this.setState({errorColor:"red",message:"user already exists"})
@@ -109,20 +114,12 @@ export class Form extends Component {
                         gst: this.state.gst,
                     })
         
-                    await this.setState({
-                        name: "",
-                        number: "",
-                        email: "",
-                        address: "",
-                        pincode: "",
-                        state: "",
-                        gst: "",
-                    })
+                   this.submissionDone()
                 } 
                 
         }
 
-            else if(this.props.mode==="edit"){
+            else if(this.props.mode==="edit" && this.validateForm()){
                 await this.props.editUser({
                     name: this.state.name,
                     number: this.state.number,
@@ -133,18 +130,9 @@ export class Form extends Component {
                     gst: this.state.gst,
                 })
 
-                await this.setState({
-                    name: "",
-                    number: "",
-                    email: "",
-                    address: "",
-                    pincode: "",
-                    state: "",
-                    gst: "",
-
-                })    
+                this.submissionDone()   
             }
-    }
+    
         
 }
 
@@ -226,7 +214,8 @@ export class Form extends Component {
                                     placeholder="Gst no." 
                                     type="text" 
                                     value={this.state.gst} 
-                                    name="gst" 
+                                    name="gst"
+                                    disabled = {this.state.disabled}
                                     onChange={(e) => this.changeValue(e)} />
                             </div>
 
