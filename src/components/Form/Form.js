@@ -87,7 +87,6 @@ export class Form extends Component {
             allFilled:true,
             errorColor:"green",
             message:"submitted successfully"
-        },()=>{console.log(this.state);
         })
     }
     
